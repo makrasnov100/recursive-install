@@ -3,6 +3,10 @@ recursive-install [![Build Status](https://travis-ci.org/emgeee/recursive-instal
 
 A small utility to recursively run `npm install` in any child directory that has a `package.json` file excluding sub directories of `node_modules`.
 
+Preinstall
+---
+You will need an `NPM_TOKEN` environment variable, and it should contain your npm `Auth Token`
+
 Install
 ---
 `$ npm i -g recursive-install`
