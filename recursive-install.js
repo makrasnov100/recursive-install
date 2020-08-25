@@ -23,9 +23,11 @@ function npmInstall (dir) {
   try {
     if(argv.production) {
       console.log('Installing ' + dir + '/package.json with --production option')
+      execSync('echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc', { cwd: dir})
       execSync('npm install --production', { cwd: dir})
     } else {
       console.log('Installing ' + dir + '/package.json')
+      execSync('echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc', { cwd: dir})
       execSync('npm install', { cwd: dir})
     }
     console.log('')
