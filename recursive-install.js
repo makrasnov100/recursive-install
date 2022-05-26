@@ -40,7 +40,7 @@ function npmInstall(dir) {
                     if (typeof str === 'string') return str.trim();
                 });
 
-            if(foldersToExclude && Array.isArray(foldersToExclude) && foldersToExclude.length > 0) {
+            if(Array.isArray(foldersToExclude) && foldersToExclude.length > 0) {
                 /**
                  * Check if current folder needs to be excluded
                  */
