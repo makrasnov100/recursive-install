@@ -24,8 +24,6 @@ function npmInstall(dir) {
     var exitCode = 0;
     try {
 
-        let foldersToExclude = [];
-
         /**
          * Environment variable called "EXCLUDE_FOLDERS" with an array of strings. Note: case-sensitive
          * Ex: packages, containers, etc..
@@ -33,7 +31,7 @@ function npmInstall(dir) {
         const excludeFolders = process.env.EXCLUDE_FOLDERS;
 
         if (excludeFolders && typeof excludeFolders === 'string') {
-            foldersToExclude = excludeFolders
+            const foldersToExclude = excludeFolders
                 .split(",")
                 .map((str) => {
                     /**
@@ -46,7 +44,13 @@ function npmInstall(dir) {
                 /**
                  * Check if current folder needs to be excluded
                  */
-                const foundFolderToExclude = foldersToExclude.find((x) => x === dir);
+                let foundFolderToExclude = false;
+
+                const currentPathFolders = dir.split("/");
+
+                for(const folder of foldersToExclude) {
+                    foundFolderToExclude = currentPathFolders.find((x) => x === folder);
+                }
 
                 /**
                  * If folder to exclude found, return without installing packages
