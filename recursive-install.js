@@ -31,6 +31,7 @@ function npmInstall(dir) {
         const excludeFolders = process.env.EXCLUDE_FOLDERS;
 
         if (excludeFolders && typeof excludeFolders === 'string') {
+
             const foldersToExclude = excludeFolders
                 .split(",")
                 .map((str) => {
@@ -40,25 +41,29 @@ function npmInstall(dir) {
                     if (typeof str === 'string') return str.trim();
                 });
 
-            if(Array.isArray(foldersToExclude) && foldersToExclude.length > 0) {
+            if (Array.isArray(foldersToExclude) && foldersToExclude.length > 0) {
+
                 /**
                  * Check if current folder needs to be excluded
                  */
-                let foundFolderToExclude = false;
-
                 const currentPathFolders = dir.split("/");
 
-                for(const folder of foldersToExclude) {
-                    foundFolderToExclude = currentPathFolders.find((x) => x === folder);
-                }
+                for (const folder of foldersToExclude) {
 
-                /**
-                 * If folder to exclude found, return without installing packages
-                 */
-                if(foundFolderToExclude) {
-                    return {
-                        dirname: dir,
-                        exitCode: exitCode
+                    const foundFolderToExclude = currentPathFolders.find((x) => x === folder);
+
+                    /**
+                     * If folder to exclude found, return without installing packages
+                     */
+                    if (foundFolderToExclude) {
+
+                        console.log("Found folder to exclude: ", foundFolderToExclude);
+                        console.log("Full path: ", dir)
+
+                        return {
+                            dirname: dir,
+                            exitCode: exitCode
+                        }
                     }
                 }
             }
