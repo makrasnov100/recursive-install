@@ -1,6 +1,6 @@
 {
   "name": "recursive-npm-install-with-token",
-  "version": "1.5.3",
+  "version": "1.5.6",
   "description": "CLI tool to recursive search child directories and run 'npm install' when a package.json file is found.",
   "main": "recursive-install.js",
   "keywords": [
