@@ -64,19 +64,20 @@ function npmInstall(dir) {
             }
         }
 
-        let options = "";
-        if (argv.installOptions) {
-            options += " " + argv.installOptions;
-        }
+        //TODO: fix
+        // let options = "";
+        // if (argv.installOptions) {
+        //     options += " " + argv.installOptions;
+        // }
 
         if (argv.production) {
             console.log('Installing ' + dir + '/package.json with --production option')
             execSync('echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc', { cwd: dir })
-            execSync('npm install --production' + options, { cwd: dir })
+            execSync('npm install --production --legacy-peer-deps', { cwd: dir })
         } else {
             console.log('Installing ' + dir + '/package.json')
             execSync('echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc', { cwd: dir })
-            execSync('npm install' + options, { cwd: dir })
+            execSync('npm install --legacy-peer-deps', { cwd: dir })
         }
         console.log('')
     } catch (err) {
