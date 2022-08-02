@@ -40,7 +40,7 @@ function npmInstall(dir) {
                     if (typeof str === 'string') return str.trim();
                 });
 
-            if(Array.isArray(foldersToExclude) && foldersToExclude.length > 0) {
+            if (Array.isArray(foldersToExclude) && foldersToExclude.length > 0) {
                 /**
                  * Check if current folder needs to be excluded
                  */
@@ -48,14 +48,14 @@ function npmInstall(dir) {
 
                 const currentPathFolders = dir.split("/");
 
-                for(const folder of foldersToExclude) {
+                for (const folder of foldersToExclude) {
                     foundFolderToExclude = currentPathFolders.find((x) => x === folder);
                 }
 
                 /**
                  * If folder to exclude found, return without installing packages
                  */
-                if(foundFolderToExclude) {
+                if (foundFolderToExclude) {
                     return {
                         dirname: dir,
                         exitCode: exitCode
@@ -64,14 +64,19 @@ function npmInstall(dir) {
             }
         }
 
+        let options = "";
+        if (argv.installOptions) {
+            options += " " + argv.installOptions;
+        }
+
         if (argv.production) {
             console.log('Installing ' + dir + '/package.json with --production option')
-            execSync('echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc', {cwd: dir})
-            execSync('npm install --production', {cwd: dir})
+            execSync('echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc', { cwd: dir })
+            execSync('npm install --production' + options, { cwd: dir })
         } else {
             console.log('Installing ' + dir + '/package.json')
-            execSync('echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc', {cwd: dir})
-            execSync('npm install', {cwd: dir})
+            execSync('echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc', { cwd: dir })
+            execSync('npm install' + options, { cwd: dir })
         }
         console.log('')
     } catch (err) {
